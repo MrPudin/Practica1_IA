@@ -49,7 +49,7 @@ class KiwisAndDogsProblem(Problem):
         self.num_dogs = 1
 
     def get_start_states(self):
-        return [State(kiwis=("D", "F"), dogs=("C",))]
+        return [State(kiwis=("D", "F"), dogs=("C"))]
 
     def is_goal_state(self, state):
         kiwis_at_tree = all(pos == "A" for pos in state.kiwis)

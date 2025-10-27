@@ -145,6 +145,8 @@ class NQueensIterativeRepair(Problem):
     # Actions go here...
 
 
+
+
 # Heuristic
 ##############################################################################
 
