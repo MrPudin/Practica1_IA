@@ -8,7 +8,7 @@ from hlogedu.search.problem import Problem, action, DDRange, Heuristic
 from hlogedu.search.visualizer import SolutionVisualizer
 
 # Visualization (you do not have to modify this!)
-##############################################################################
+###########################################################################
 
 
 class NQueensVisualizer(SolutionVisualizer):
