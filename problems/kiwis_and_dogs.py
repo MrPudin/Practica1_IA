@@ -52,9 +52,11 @@ class KiwisAndDogsProblem(Problem):
         return [State(kiwis=("D", "F"), dogs=("C",))]
 
     def is_goal_state(self, state):
-        raise NotImplementedError("Implement me!")
+        kiwis_at_tree = all(pos == "A" for pos in state.kiwis)
+        dogs_at_bones = all(pos == "E" for pos in state.dogs)
+        return kiwis_at_tree and dogs_at_bones
 
     def is_valid_state(self, _):
-        raise NotImplementedError("Implement me!")
+        return True
 
     # Actions go here...
