@@ -3,9 +3,11 @@ import math
 
 from typing import Any
 
-from hlogedu.search.problem import Problem, action, Categorical
+from hlogedu.search.problem import Problem, action, Categorical, Heuristic
 from hlogedu.search.visualizer import SolutionVisualizer
 from hlogedu.search.common import ClassParameter
+
+import math
 
 # Visualization (you do not have to modify this!)
 ##############################################################################
@@ -209,3 +211,33 @@ class PacmanProblem(Problem):
         if 0 <= r <= self.rows and 0 <= c <= self.cols and self.grid[r][c] != "%":
             return ((r, c), new_food)
         return None
+
+# Heuristics
+##############################################################################
+
+
+@PacmanProblem.heuristic
+class PacmanManhattanHeuristic(Heuristic):
+
+    def compute(self, state):
+        (pac_x, pac_y), food = state
+        
+        if food is None:
+            return 0
+        
+        food_x, food_y = food
+
+        return abs(pac_x - food_x) + abs(pac_y - food_y)
+    
+@PacmanProblem.heuristic
+class PacmanEuclideanHeuristic(Heuristic):
+
+    def compute(self, state):
+        (pac_x, pac_y), food = state
+        
+        if food is None:
+            return 0
+        
+        food_x, food_y = food
+
+        return math.sqrt(abs(pac_x - food_x)**2 + abs(pac_y - food_y)**2)

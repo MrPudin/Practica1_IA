@@ -8,9 +8,8 @@ class TreeIDS(Algorithm):
         super().__init__(problem) 
         self.max_depth = max_depth
     
-    def run(self, max_depth=None):
-        if max_depth is None:
-            max_depth = self.max_depth
+    def run(self, max_depth):
+        max_depth = self.max_depth
             
         expand_counter = 0
         
@@ -33,15 +32,12 @@ class TreeIDS(Algorithm):
                     expand_counter += 1
                     n.expand_order = expand_counter
                     
-                    for s, a, c in sorted(self.problem.get_successors(n.state), 
-                                         key=lambda x: x[0]):
+                    for s, a, c in sorted(self.problem.get_successors(n.state), key=lambda x: x[0]):
                         ns = Node(s, a, cost=n.cost + c, parent=n)
                         n.add_successor(ns)
                         
                         if self.problem.is_goal_state(ns.state):
-                            return Solution(self.problem, roots, solution_node=ns, 
-                                          cutoff=False)
-                        
+                            return Solution(self.problem, roots, solution_node=ns, cutoff=False)
                         self.fringe.push(ns)
             if not cutoff:
                 break

@@ -54,6 +54,7 @@ class KiwisAndDogsProblem(Problem):
     def is_goal_state(self, state):
         kiwis_at_tree = all(pos == "A" for pos in state.kiwis)
         dogs_at_bones = all(pos == "E" for pos in state.dogs)
+
         return kiwis_at_tree and dogs_at_bones
 
     def is_valid_state(self, _):
