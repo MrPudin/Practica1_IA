@@ -215,7 +215,6 @@ class PacmanProblem(Problem):
 # Heuristics
 ##############################################################################
 
-
 @PacmanProblem.heuristic
 class PacmanManhattanHeuristic(Heuristic):
 

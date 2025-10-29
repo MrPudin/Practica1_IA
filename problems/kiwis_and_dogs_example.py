@@ -8,8 +8,8 @@ class State:
     dogs: tuple[str]
 
 
-class KiwisAndDogsProblem(Problem):
-    NAME = "kiwis-and-dogs"
+class KiwisAndDogsProblemExample(Problem):
+    NAME = "kiwis-and-dogs-example"
 
     def __init__(self):
         super().__init__()
