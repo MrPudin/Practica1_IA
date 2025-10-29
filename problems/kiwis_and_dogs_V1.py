@@ -115,4 +115,31 @@ class KiwisAndDogsProblem(Problem):
         cost = lambda self, state, kiwi_id, destination: self.get_move_cost(state.kiwis[kiwi_id], destination)
     )
     def move_kiwi(self, state, kiwi_id, destination):
-        
+        current_pos = state.kiwis[kiwi_id]
+        valid_moves = [dst for (dst, _) in self.get_valid_moves(current_pos, state)]
+        if destination not in valid_moves:
+            return None
+
+        new_kiwis = list(state.kiwis)
+        new_kiwis[kiwi_id] = destination
+        return State(kiwis=tuple(new_kiwis), dogs=state.dogs)
+    
+    @action(
+        # Dogs range
+        DDRange(0, 'num_dogs'),
+
+        # Dynamic Categorical ---> Accessible nodes from source node (appends the accessible nodes to a list)
+        Categorical(lambda self, state, dog_id: [destination for (destination, _) in self.get_valid_moves(state.dogs[dog_id], state)]),
+
+        # Dynamic cost
+        cost = lambda self, state, dog_id, destination: self.get_move_cost(state.dogs[dog_id], destination)
+    )
+    def move_dog(self, state, dog_id, destination):
+        current_pos = state.dogs[dog_id]
+        valid_moves = [dst for (dst, _) in self.get_valid_moves(current_pos, state)]
+        if destination not in valid_moves:
+            return None
+
+        new_dogs = list(state.dogs)
+        new_dogs[dog_id] = destination
+        return State(kiwis=state.kiwis, dogs=tuple(new_dogs))
