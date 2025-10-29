@@ -14,7 +14,7 @@ class State:
 
 
 class KiwisAndDogsProblem(Problem):
-    NAME = "kiwis-and-dogs"
+    NAME = "kiwis-and-dogsV2"
 
     def __init__(self):
         super().__init__()

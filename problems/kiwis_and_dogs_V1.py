@@ -105,44 +105,49 @@ class KiwisAndDogsProblemV1(Problem):
     ###############
 
     @action(
-        # Kiwis range
-        DDRange(0, 'num_kiwis'),
-        
-        # Dynamic Categorical ---> Accessible nodes from source node (appends the accessible nodes to a list)
-        Categorical(["A","B","C","D","E","F","G"]),
-        
+    DDRange(0, 'num_kiwis'),
+    Categorical(["A","B","C","D","E","F","G"])
     )
     def move_kiwi(self, state, kiwi_id, destination):
         current_pos = state.kiwis[kiwi_id]
-        valid_moves = [dst for (dst, _) in self.get_valid_moves(current_pos, state)]
-        if destination not in valid_moves:
+        valid_moves = self.get_valid_moves(current_pos, state)
+        
+        move_cost = None
+        for dst, cost in valid_moves:
+            if dst == destination:
+                move_cost = cost
+                break
+        
+        if move_cost is None:
             return None
 
-        cost = self.graph[current_pos, destination][0]
         new_kiwis = list(state.kiwis)
         new_kiwis[kiwi_id] = destination
-        print(self.get_move_cost)
-        return (State(kiwis=tuple(new_kiwis), dogs=state.dogs), cost)
-    
+        new_state = State(kiwis=tuple(new_kiwis), dogs=state.dogs)
+        
+        # ¡ORDEN CORRECTO: (costo, estado)!
+        return move_cost, new_state
+
     @action(
         DDRange(0, 'num_dogs'),
-        Categorical(["A","B","C","D","E","F","G"]),
+        Categorical(["A","B","C","D","E","F","G"])
     )
     def move_dog(self, state, dog_id, destination):
-
         current_pos = state.dogs[dog_id]
-        valid_moves = [dst for (dst, _) in self.get_valid_moves(current_pos, state)]
+        valid_moves = self.get_valid_moves(current_pos, state)
         
-        if destination not in valid_moves:
+        move_cost = None
+        for dst, cost in valid_moves:
+            if dst == destination:
+                move_cost = cost
+                break
+        
+        if move_cost is None:
             return None
-
-        # ✅ cost debe ser un número
-        cost = self.get_move_cost(current_pos, destination)
 
         new_dogs = list(state.dogs)
         new_dogs[dog_id] = destination
-
-        # ✅ devolver en orden correcto (State, cost)
-        print (self.get_move_cost, type(cost))
-
-        return cost, State(kiwis=state.kiwis, dogs=tuple(new_dogs))
+        new_state = State(kiwis=state.kiwis, dogs=tuple(new_dogs))
+        
+        # ¡ORDEN CORRECTO: (costo, estado)!
+        return move_cost, new_state

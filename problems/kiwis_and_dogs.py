@@ -1,63 +1,38 @@
-from dataclasses import dataclass
-
-from hlogedu.search.problem import Problem, action, Categorical, DDRange
+from hlogedu.search.problem import Problem, action, Categorical
 
 
-@dataclass(frozen=True, order=True)
-class State:
-    kiwis: tuple[str]
-    dogs: tuple[str]
-
-
-# Problem
-##############################################################################
-
-
-class KiwisAndDogsProblem(Problem):
-    NAME = "kiwis-and-dogs"
-
+class AiExam1516P4(Problem):
+    NAME = "a"
     def __init__(self):
-        super().__init__()
-        # Assume we only have `nobody(X)` and `somebody(X)` conditions.
-        # In case of having more than one condition, these will always be
-        # a conjunction and will be separated by a comma.
         self.graph = {
-            # A
-            ("A", "B"): (3, "nobody(E)"),
-            ("A", "C"): (4, ""),
-            # B
-            ("B", "A"): (3, "nobody(E)"),
-            ("B", "C"): (1, ""),
-            ("B", "G"): (5, ""),
-            # C
-            ("C", "B"): (1, ""),
-            ("C", "D"): (2, "somebody(E),somebody(G)"),
-            # D
-            ("D", "C"): (2, "somebody(E),somebody(G)"),
-            ("D", "E"): (8, "somebody(A)"),
-            ("D", "F"): (3, "somebody(C)"),
-            # E
-            ("E", "D"): (8, "somebody(A)"),
-            ("E", "F"): (5, ""),
-            # F
-            ("F", "D"): (3, "somebody(C)"),
-            # G
-            ("G", "F"): (7, ""),
-            ("G", "B"): (5, ""),
+            ("A", "B"): 4,
+            ("A", "C"): 2,
+            ("B", "D"): 2,
+            ("C", "A"): 0.5,
+            ("C", "E"): 3,
+            ("D", "G1"): 4,
+            ("D", "G2"): 10,
+            ("E", "G1"): 1,
+            ("E", "G2"): 10,
         }
-        self.num_kiwis = 2
-        self.num_dogs = 1
+
+        self.start_states = ["A"]
+        self.goal_states = set(["G1", "G2"])
 
     def get_start_states(self):
-        return [State(kiwis=("D", "F"), dogs=("C"))]
+        return self.start_states
 
     def is_goal_state(self, state):
-        kiwis_at_tree = all(pos == "A" for pos in state.kiwis)
-        dogs_at_bones = all(pos == "E" for pos in state.dogs)
-
-        return kiwis_at_tree and dogs_at_bones
+        return state in self.goal_states
 
     def is_valid_state(self, _):
         return True
 
-    # Actions go here...
+    @action(Categorical(["A", "B", "C", "D", "E", "G1", "G2"]))
+    def move(self, state, dest):
+        edge = (state, dest)
+
+        if edge in self.graph:
+            return self.graph[edge], dest
+
+        return None
