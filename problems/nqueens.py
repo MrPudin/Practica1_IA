@@ -191,3 +191,4 @@ class RepairHeuristic(Heuristic):
         for col in range(n):
             total += self.problem.conflicts(state, col)
         return total
+
