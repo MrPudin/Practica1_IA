@@ -140,10 +140,7 @@ class NQueensIterativeRepair(Problem):
         return all(self.conflicts(state, col) == 0 for col in range(len(state)))
 
     def is_valid_state(self, state):
-        for queen in state:
-            if queen < 0 or queen > n - 1:
-                return False
-        return True
+        return all(self.conflicts(state, c, state[c]) == 0 for c in range(len(state)))
     
     def conflicts(self, state, col):
         """Count conflicts for placing a queen at (col, row)."""
