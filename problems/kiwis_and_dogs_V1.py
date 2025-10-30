@@ -126,7 +126,7 @@ class KiwisAndDogsProblemV1(Problem):
         new_state = State(kiwis=tuple(new_kiwis), dogs=state.dogs)
         
         # ¡ORDEN CORRECTO: (costo, estado)!
-        return move_cost, destination
+        return new_state, move_cost
 
     @action(
         DDRange(0, 'num_dogs'),
@@ -150,4 +150,4 @@ class KiwisAndDogsProblemV1(Problem):
         new_state = State(kiwis=state.kiwis, dogs=tuple(new_dogs))
         
         # ¡ORDEN CORRECTO: (costo, estado)!
-        return move_cost, destination
+        return new_state, move_cost

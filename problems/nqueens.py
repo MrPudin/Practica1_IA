@@ -137,14 +137,36 @@ class NQueensIterativeRepair(Problem):
         return [tuple(random.randint(0, self.b_size - 1) for _ in range(self.b_size))]
 
     def is_goal_state(self, state):
-        raise NotImplementedError("Implement me!")
+        return self.is_valid_state(state)
 
     def is_valid_state(self, state):
-        raise NotImplementedError("Implement me!")
+        return all(self.conflicts(state, c, state[c]) == 0 for c in range(len(state)))
+    
+    def conflicts(self, state, col, row):
+        """Count conflicts for placing a queen at (col, row)."""
+        n = len(state)
+        c = 0
+        for c2 in range(n):
+            if c2 == col:
+                continue
+            r2 = state[c2]
+            if r2 == row or abs(r2 - row) == abs(c2 - col):
+                c += 1
+        return c
 
     # Actions go here...
-
-
+    @action(
+        DDRange(0, 'b_size'),
+        DDRange(0, 'b_size'),
+        cost=1
+    )
+    def move_queen(self, state, col, new_row):
+        """Move queen in column col to new_row. Return None if move unnecessary."""
+        if state[col] == new_row:
+            return None
+        new_state = list(state)
+        new_state[col] = new_row
+        return tuple(new_state)
 
 
 # Heuristic
@@ -155,4 +177,9 @@ class NQueensIterativeRepair(Problem):
 class RepairHeuristic(Heuristic):
 
     def compute(self, state):
-        raise NotImplementedError("Implement me!")
+        """Return number of total conflicts in the board."""
+        n = len(state)
+        total = 0
+        for col in range(n):
+            total += self.problem.conflicts(state, col, state[col])
+        return total

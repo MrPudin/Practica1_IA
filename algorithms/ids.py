@@ -4,7 +4,7 @@ from hlogedu.search.containers import Stack
 class TreeIDS(Algorithm):
     NAME = "my-tree-ids"
     
-    def __init__(self, problem, max_depth=50):
+    def __init__(self, problem, max_depth=20):
         super().__init__(problem) 
         self.max_depth = max_depth
     
@@ -15,7 +15,7 @@ class TreeIDS(Algorithm):
         expand_counter = 0
         
         for depth_limit in range(max_depth + 1):
-            cutoff = False  # Reiniciar cutoff en cada iteración
+            cutoff = False
             roots = [Node(s) for s in self.problem.get_start_states()]
             self.fringe = Stack()
             
@@ -26,26 +26,23 @@ class TreeIDS(Algorithm):
             
             while self.fringe:
                 n = self.fringe.pop()
-                
+
+                if self.problem.is_goal_state(n.state):
+                    return Solution(self.problem, roots, solution_node=n, cutoff=False)
+
                 if n.depth >= depth_limit:
                     cutoff = True
-                else:
-                    expand_counter += 1
-                    n.expand_order = expand_counter
-                    
-                    for s, a, c in sorted(self.problem.get_successors(n.state), 
-                                         key=lambda x: x[0]):
-                        ns = Node(s, a, cost=n.cost + c, parent=n)
-                        n.add_successor(ns)
-                        
-                        if self.problem.is_goal_state(ns.state):
-                            return Solution(self.problem, roots, solution_node=ns, 
-                                          cutoff=False)
-                        
-                        self.fringe.push(ns)
+                    continue
+                
+                expand_counter += 1
+                n.expand_order = expand_counter
+                
+                for s, a, c in sorted(self.problem.get_successors(n.state),
+                                    key=lambda x: x[0]):
+                    ns = Node(s, a, cost=n.cost + c, parent=n)
+                    n.add_successor(ns)
+                    self.fringe.push(ns)
             
-            # Si no encontramos solución en esta iteración, continuamos
-            # solo si hubo cutoff (es decir, hay nodos más profundos por explorar)
             if not cutoff:
                 break
         
