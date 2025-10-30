@@ -117,7 +117,7 @@ class NQueensIterativeRepair(Problem):
     moving the queens to different possitions
     """
 
-    NAME = "NQueensIR"
+    NAME = "NQueensIR-v1"
     VISUALIZER = NQueensVisualizer
     PARAMS = [
         ClassParameter(
