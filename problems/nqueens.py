@@ -137,22 +137,33 @@ class NQueensIterativeRepair(Problem):
         return [tuple(random.randint(0, self.b_size - 1) for _ in range(self.b_size))]
 
     def is_goal_state(self, state):
-        return self.is_valid_state(state)
+        return not conflicts(state)
 
     def is_valid_state(self, state):
-        return all(self.conflicts(state, c, state[c]) == 0 for c in range(len(state)))
+        for queen in state:
+            if queen < 0 or queen > n - 1:
+                return False
+        return True
     
-    def conflicts(self, state, col, row):
+    def conflicts(self, state):
         """Count conflicts for placing a queen at (col, row)."""
         n = len(state)
-        c = 0
-        for c2 in range(n):
-            if c2 == col:
-                continue
-            r2 = state[c2]
-            if r2 == row or abs(r2 - row) == abs(c2 - col):
-                c += 1
-        return c
+        for queen in range(n):
+            for queen2 in range(queen + 1, n):
+                row1 = state[queen]
+                row2 = state[queen2]
+
+                # Conflict : Same row
+                if row1 == row2:
+                    return True
+
+                # COnflict : Same diagonal
+                if abs(row1 - row2) == abs(queen - queen2):
+                    return True
+
+        return False
+
+
 
     # Actions go here...
     @action(
