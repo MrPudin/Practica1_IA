@@ -140,7 +140,7 @@ class NQueensIterativeRepair(Problem):
         return all(self.conflicts(state, col) == 0 for col in range(len(state)))
 
     def is_valid_state(self, state):
-        return all(self.conflicts(state, c, state[c]) == 0 for c in range(len(state)))
+        return all(self.conflicts(state, c) == 0 for c in range(len(state)))
     
     def conflicts(self, state, col):
         """Count conflicts for placing a queen at (col, row)."""
@@ -186,5 +186,5 @@ class RepairHeuristic(Heuristic):
         n = len(state)
         total = 0
         for col in range(n):
-            total += self.problem.conflicts(state, col, state[col])
+            total += self.problem.conflicts(state, col)
         return total
