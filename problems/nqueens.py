@@ -158,9 +158,6 @@ class NQueensIterativeRepair(Problem):
                 conflicts_num += 1
         
         return conflicts_num
-            
-
-
 
     # Actions go here...
     @action(

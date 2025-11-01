@@ -1,0 +1,2 @@
+./nqueens.sh: línea 18:  6794 Terminado (killed)      timeout $TIME_LIMIT bash -c "$CMD" > "$LOGFILE" 2>&1
+
