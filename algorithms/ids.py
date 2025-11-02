@@ -8,7 +8,7 @@ class TreeIDS(Algorithm):
         super().__init__(problem)
         self.max_depth = max_depth
     
-    def run(self, max_depth=None):
+    def run(self, max_depth=20):
         if max_depth is None:
             max_depth = self.max_depth
             

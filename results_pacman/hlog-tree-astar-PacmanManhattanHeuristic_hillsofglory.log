@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/mr-pudin/assignment1-v1.0/assignment1/.venv/bin/hlogedu-search", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/mr-pudin/assignment1-v1.0/assignment1/.venv/lib/python3.11/site-packages/hlogedu/__main__.py", line 67, in main
+  File "/home/mr-pudin/assignment1-v1.0/assignment1/.venv/lib/python3.11/site-packages/hlogedu/__main__.py", line 186, in run_run_command
+  File "/home/mr-pudin/assignment1-v1.0/assignment1/.venv/lib/python3.11/site-packages/hlogedu/__main__.py", line 197, in _run_run_command
+  File "/home/mr-pudin/assignment1-v1.0/assignment1/.venv/lib/python3.11/site-packages/hlogedu/search/problem.py", line 352, in new_init
+  File "problems/pacman.py", line 159, in __init__
+    with open(file) as fh:
+         ^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'problems/layouts/hillsofglory.lay'
+❌ hlog-tree-astar falló con código de error: 1
