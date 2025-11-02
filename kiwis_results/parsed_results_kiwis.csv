@@ -1,7 +1,0 @@
-algorithm,timeout,max_fringe,cost,length,expanded,filename
-hlog-graph-ucs,False,63,77,21,253,hlog-graph-ucs.log
-hlog-tree-ucs,True,,,,,hlog-tree-ucs.log
-hlog-graph-dfs,False,66,171,47,226,hlog-graph-dfs.log
-hlog-graph-bfs,False,45,77,21,245,hlog-graph-bfs.log
-hlog-tree-bfs,True,,,,,hlog-tree-bfs.log
-hlog-tree-dfs,True,,,,,hlog-tree-dfs.log

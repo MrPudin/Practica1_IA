@@ -13,7 +13,7 @@ class Tree_Astar(Algorithm):
 
         expand_counter = 0
         roots = [Node(s) for s in self.problem.get_start_states()]
-        self.fringe = PriorityQueue(key=lambda node: node.state)  # Para tie-breaking estable
+        self.fringe = PriorityQueue(key=lambda node: node.state)
 
         # Inicializar fringe con nodos raíz
         for n in roots:
@@ -53,10 +53,9 @@ class Graph_Astar(Algorithm):
             heuristic = self.problem.heuristic
 
         expand_counter = 0
-        best_cost = {}  # Mejor coste g conocido para cada estado
+        best_cost = {}
 
         roots = [Node(s) for s in self.problem.get_start_states()]
-        # PriorityQueue con key=node.state para romper empates de forma estable
         self.fringe = PriorityQueue(key=lambda node: node.state)
 
         # Inicializar fringe con los nodos raíz

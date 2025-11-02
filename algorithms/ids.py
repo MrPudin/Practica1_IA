@@ -4,11 +4,11 @@ from hlogedu.search.containers import Stack
 class TreeIDS(Algorithm):
     NAME = "my-tree-ids"
     
-    def __init__(self, problem, max_depth=20):
+    def __init__(self, problem, max_depth):
         super().__init__(problem)
         self.max_depth = max_depth
     
-    def run(self, max_depth=20):
+    def run(self, max_depth):
         if max_depth is None:
             max_depth = self.max_depth
             
